@@ -2,6 +2,7 @@
 
 Remote control for JVC projectors using the LAN interface of the projector.
 The app has been developed for a X7900 series projector.
+The app can be found in the Google Playstore
 
 Features:
 - power on/off
@@ -16,3 +17,5 @@ It has been confirmed working on the following other models:
 -    DLA-X5900
 -    NX5
 -    NZ8/RS3100
+
+The repository can be directly imported as an Android Studio project.
