@@ -46,12 +46,15 @@ public class MainActivity extends AppCompatActivity {
     private static final byte[] PICTURE_MODE_NATURAL =  { (byte)0x21, (byte)0x89, (byte)0x01, (byte)0x50, (byte)0x4D, (byte)0x50, (byte)0x4D, (byte)0x30, (byte)0x33, (byte)0x0a };
     private static final byte[] PICTURE_MODE_CINEMA =  { (byte)0x21, (byte)0x89, (byte)0x01, (byte)0x50, (byte)0x4D, (byte)0x50, (byte)0x4D, (byte)0x30, (byte)0x31, (byte)0x0a };
     private static final byte[] PICTURE_MODE_HDR =  { (byte)0x21, (byte)0x89, (byte)0x01, (byte)0x50, (byte)0x4D, (byte)0x50, (byte)0x4D, (byte)0x30, (byte)0x34, (byte)0x0a };
-    final protected static String SUCCESSFUL_CONNECTION_REPLY = "06890100000A";
-    final protected static String POWERED_ON = "4089015057310A";
-    final protected static String POWERED_OFF = "4089015057300A";
-    final protected static String COOLING_DOWN = "4089015057320A";
-    final protected static String HDMI_1 = "4089014950360A";
-    final protected static String HDMI_2 = "4089014950370A";
+    private static final byte[] PICTURE_MODE_FILM =  { (byte)0x21, (byte)0x89, (byte)0x01, (byte)0x50, (byte)0x4D, (byte)0x50, (byte)0x4D, (byte)0x30, (byte)0x30, (byte)0x0a };
+    private static final byte[] PICTURE_MODE_THX =  { (byte)0x21, (byte)0x89, (byte)0x01, (byte)0x50, (byte)0x4D, (byte)0x50, (byte)0x4D, (byte)0x30, (byte)0x36, (byte)0x0a };
+    private static final byte[] PICTURE_MODE_USER1 =  { (byte)0x21, (byte)0x89, (byte)0x01, (byte)0x50, (byte)0x4D, (byte)0x50, (byte)0x4D, (byte)0x30, (byte)0x43, (byte)0x0a };
+    private final static String SUCCESSFUL_CONNECTION_REPLY = "06890100000A";
+    private final static String POWERED_ON = "4089015057310A";
+    private final static String POWERED_OFF = "4089015057300A";
+    private final static String COOLING_DOWN = "4089015057320A";
+    private final static String HDMI_1 = "4089014950360A";
+    private final static String HDMI_2 = "4089014950370A";
     private static final int CONNECTION_CHECK_INTERVAL = 30000;
     Handler handler = new Handler();
     Runnable runnable;
@@ -123,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Create buffer for the 3-way TCP handshake
             byte[] inputBuffer = new byte[5];
+            //noinspection ResultOfMethodCallIgnored
             beamerInputStream.read(inputBuffer);
 
             // Wait for the PJ_OK packet (in decimal 80 74 95 79 75)
@@ -134,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 beamerOutputStream.write(PJREQ);
 
                 // Wait for PJACK packet
+                //noinspection ResultOfMethodCallIgnored
                 beamerInputStream.read(inputBuffer);
                 response = new String(inputBuffer);
                 if (response.equals("PJACK")) {
@@ -167,9 +172,11 @@ public class MainActivity extends AppCompatActivity {
                 beamerOutputStream.write(HDMI_CHECK);
 
                 byte[] inputBuffer = new byte[6];
+                //noinspection ResultOfMethodCallIgnored
                 beamerInputStream.read(inputBuffer);
 
                 inputBuffer = new byte[7];
+                //noinspection ResultOfMethodCallIgnored
                 beamerInputStream.read(inputBuffer);
 
                 String reply = BinAscii.hexlify(inputBuffer);
@@ -216,9 +223,11 @@ public class MainActivity extends AppCompatActivity {
                 beamerOutputStream.write(POWER_CHECK);
 
                 byte[] inputBuffer = new byte[6];
+                //noinspection ResultOfMethodCallIgnored
                 beamerInputStream.read(inputBuffer);
 
                 inputBuffer = new byte[7];
+                //noinspection ResultOfMethodCallIgnored
                 beamerInputStream.read(inputBuffer);
                 String reply = BinAscii.hexlify(inputBuffer);
 
@@ -269,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
                  */
                 beamerOutputStream.write(CONNECTION_CHECK);
                 byte[] inputBuffer = new byte[6];
+                //noinspection ResultOfMethodCallIgnored
                 beamerInputStream.read(inputBuffer);
                 bSuccessfulConnect = BinAscii.hexlify(inputBuffer).equals(SUCCESSFUL_CONNECTION_REPLY);
                 statusIcon.setBackgroundColor(Color.GREEN);
@@ -348,6 +358,7 @@ public class MainActivity extends AppCompatActivity {
                 // Select HDMI port 1
                 beamerOutputStream.write(HDMI_1_ON);
                 byte[] inputBuffer = new byte[6];
+                //noinspection ResultOfMethodCallIgnored
                 beamerInputStream.read(inputBuffer);
                 checkHDMIInput();
                 socket.close();
@@ -373,6 +384,7 @@ public class MainActivity extends AppCompatActivity {
                 // Select HDMI port 2
                 beamerOutputStream.write(HDMI_2_ON);
                 byte[] inputBuffer = new byte[6];
+                //noinspection ResultOfMethodCallIgnored
                 beamerInputStream.read(inputBuffer);
                 checkHDMIInput();
                 socket.close();
@@ -382,6 +394,71 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * Sets the picture mode to User1
+     * @param view this view
+     * @throws ConnectException, SocketTimeoutException, UnknownHostException
+     */
+    public void setPictureModeUser1(View view) throws IOException {
+        try {
+            if (threeWayHandshake() && socket != null && POWER_STATUS.equals("ON")) {
+                // Send response PJREQ (in decimal 80 74 82 69 81)
+                beamerOutputStream = socket.getOutputStream();
+
+                // Set picture mode
+                beamerOutputStream.write(PICTURE_MODE_USER1);
+                socket.close();
+            }
+        } catch (ConnectException | SocketTimeoutException | UnknownHostException e) {
+            socket.close();
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sets the picture mode to THX
+     * @param view this view
+     * @throws ConnectException, SocketTimeoutException, UnknownHostException
+     */
+    public void setPictureModeTHX(View view) throws IOException {
+        try {
+            if (threeWayHandshake() && socket != null && POWER_STATUS.equals("ON")) {
+                // Send response PJREQ (in decimal 80 74 82 69 81)
+                beamerOutputStream = socket.getOutputStream();
+
+                // Set picture mode
+                beamerOutputStream.write(PICTURE_MODE_THX);
+                socket.close();
+            }
+        } catch (ConnectException | SocketTimeoutException | UnknownHostException e) {
+            socket.close();
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sets the picture mode to FILM
+     * @param view this view
+     * @throws ConnectException, SocketTimeoutException, UnknownHostException
+     */
+    public void setPictureModeFilm(View view) throws IOException {
+        try {
+            if (threeWayHandshake() && socket != null && POWER_STATUS.equals("ON")) {
+                // Send response PJREQ (in decimal 80 74 82 69 81)
+                beamerOutputStream = socket.getOutputStream();
+
+                // Set picture mode
+                beamerOutputStream.write(PICTURE_MODE_FILM);
+                socket.close();
+            }
+        } catch (ConnectException | SocketTimeoutException | UnknownHostException e) {
+            socket.close();
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Sets the picture mode to NATURAL

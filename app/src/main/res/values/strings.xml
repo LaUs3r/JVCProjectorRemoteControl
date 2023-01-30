@@ -12,4 +12,7 @@
     <string name="pictureModeNatural">Natural</string>
     <string name="pictureModeCinema">Cinema</string>
     <string name="pictureModeHDR">HDR</string>
+    <string name="pictureModeFilm">Film</string>
+    <string name="pictureModeTHX">THX</string>
+    <string name="pictureModeUser1">User1</string>
 </resources>

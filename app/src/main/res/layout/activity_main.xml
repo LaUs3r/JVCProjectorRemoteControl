@@ -94,7 +94,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="50dp"
@@ -102,6 +102,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/power_on">
+
+        <Button
+            android:id="@+id/picture_mode_thx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="setPictureModeTHX"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/pictureModeTHX"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/picture_mode_user1"
+            app:layout_constraintStart_toEndOf="@+id/pictureModeNatural"
+            app:layout_constraintTop_toBottomOf="@+id/pictureModeNatural" />
 
         <TextView
             android:id="@+id/pictureMode"
@@ -190,6 +206,33 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pictureMode" />
+
+        <Button
+            android:id="@+id/picture_mode_user1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="setPictureModeUser1"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/pictureModeUser1"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pictureModeNatural" />
+
+        <Button
+            android:id="@+id/picture_mode_film"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="setPictureModeFilm"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/pictureModeFilm"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/pictureMode"
+            app:layout_constraintTop_toBottomOf="@+id/pictureModeNatural" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
