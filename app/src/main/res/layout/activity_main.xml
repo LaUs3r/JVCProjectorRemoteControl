@@ -4,15 +4,192 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:id="@+id/rootview"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/powerStatusIcon"
+        android:layout_width="18dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#E30A0A"
+        app:layout_constraintBottom_toBottomOf="@+id/powerStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/powerStatus" />
+
     <TextView
+        android:id="@+id/powerStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginBottom="68dp"
+        android:text="@string/power_status"
+        android:textColor="@android:color/holo_blue_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/connectionStatus" />
+
+    <Button
+        android:id="@+id/power_on"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="100dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:onClick="power_on"
+        android:text="@string/power_on"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toStartOf="@+id/power_off"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/power_off"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="50dp"
+        android:backgroundTint="@color/holo_blue_dark"
+        android:onClick="power_off"
+        android:text="@string/power_off"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/power_on"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/connectionStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/connection_status"
+        android:textColor="@android:color/holo_blue_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/connectionStatusIcon" />
+
+    <Button
+        android:id="@+id/connectionStatusIcon"
+        android:layout_width="18dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#E30A0A"
+        app:layout_constraintBottom_toBottomOf="@+id/connectionStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/connectionStatus" />
+
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="63dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="30dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/ip_address_port"
+        android:foreground="@drawable/ic_settings"
+        android:foregroundTint="@android:color/holo_blue_light"
+        android:onClick="showSettingsDialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/dotted_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/power_on">
+
+        <TextView
+            android:id="@+id/pictureMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/pictureMode"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hdmi_1" />
+
+        <Button
+            android:id="@+id/hdmi_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:onClick="selectHdmi2"
+            android:text="@string/hdmi_2"
+            app:layout_constraintStart_toEndOf="@+id/hdmi_1"
+            app:layout_constraintTop_toBottomOf="@+id/selectInput" />
+
+        <TextView
+            android:id="@+id/selectInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/input"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/hdmi_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="selectHdmi1"
+            android:text="@string/hdmi_1"
+            app:layout_constraintStart_toStartOf="@+id/selectInput"
+            app:layout_constraintTop_toBottomOf="@+id/selectInput" />
+
+        <Button
+            android:id="@+id/pictureModeNatural"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="setPictureModeNatural"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/pictureModeNatural"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/pictureMode"
+            app:layout_constraintTop_toBottomOf="@+id/pictureMode" />
+
+        <Button
+            android:id="@+id/picture_mode_cinema"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="setPictureModeCinema"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/pictureModeCinema"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/picture_mode_hdr"
+            app:layout_constraintStart_toEndOf="@+id/pictureModeNatural"
+            app:layout_constraintTop_toBottomOf="@+id/pictureMode" />
+
+        <Button
+            android:id="@+id/picture_mode_hdr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="setPictureModeHDR"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/pictureModeHDR"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pictureMode" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
