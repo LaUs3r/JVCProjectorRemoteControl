@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
                 checkHDMIInput();
                 socket.close();
             }
-        } catch (ConnectException | SocketTimeoutException | UnknownHostException e) {
+        } catch (ConnectException | SocketTimeoutException | IllegalStateException | UnknownHostException e) {
             socket.close();
             e.printStackTrace();
         }
@@ -389,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
                 checkHDMIInput();
                 socket.close();
             }
-        } catch (ConnectException | SocketTimeoutException | UnknownHostException e) {
+        } catch (ConnectException | SocketTimeoutException | IllegalStateException | UnknownHostException e) {
             socket.close();
             e.printStackTrace();
         }
